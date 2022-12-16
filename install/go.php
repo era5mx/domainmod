@@ -50,6 +50,8 @@ $temp_default_hosting = _('[no hosting]');
 $temp_default_owner = _('[no owner]');
 $temp_default_dns = _('[no dns]');
 $temp_default_ip_address = _('[no ip address]');
+$temp_default_notes = _('[no notes]');
+$temp_default_url = _('[no url]');
 
 // SSL Cert Types
 $temp_default_ssl_type_one = _('Web Server SSL/TLS Certificate');
@@ -215,11 +217,12 @@ try {
 
    $stmt = $pdo->prepare("
         INSERT INTO `categories`
-        (`name`, `stakeholder`, `creation_type_id`, `insert_time`)
+        (`name`, `stakeholder`, `notes`, `creation_type_id`, `insert_time`)
         VALUES
-        (:temp_default_category, :temp_default_stakeholder, :creation_type_id_installation, :timestamp)");
+        (:temp_default_category, :temp_default_stakeholder, :temp_default_notes, :creation_type_id_installation, :timestamp)");
     $stmt->bindValue('temp_default_category', $temp_default_category, PDO::PARAM_STR);
     $stmt->bindValue('temp_default_stakeholder', $temp_default_stakeholder, PDO::PARAM_STR);
+	$stmt->bindValue('temp_default_notes', $temp_default_notes, PDO::PARAM_STR);
     $stmt->bindValue('creation_type_id_installation', $creation_type_id_installation, PDO::PARAM_INT);
     $stmt->bindValue('timestamp', $timestamp, PDO::PARAM_STR);
     $stmt->execute();
@@ -239,10 +242,12 @@ try {
 
    $stmt = $pdo->prepare("
         INSERT INTO `hosting`
-        (`name`, `creation_type_id`, `insert_time`)
+        (`name`, `url`, `notes`, `creation_type_id`, `insert_time`)
         VALUES
-        (:temp_default_hosting, :creation_type_id_installation, :timestamp)");
+        (:temp_default_hosting, :temp_default_url, :temp_default_notes, :creation_type_id_installation, :timestamp)");
     $stmt->bindValue('temp_default_hosting', $temp_default_hosting, PDO::PARAM_STR);
+	$stmt->bindValue('temp_default_url', $temp_default_url, PDO::PARAM_STR);
+	$stmt->bindValue('temp_default_notes', $temp_default_notes, PDO::PARAM_STR);
     $stmt->bindValue('creation_type_id_installation', $creation_type_id_installation, PDO::PARAM_INT);
     $stmt->bindValue('timestamp', $timestamp, PDO::PARAM_STR);
     $stmt->execute();
@@ -262,10 +267,11 @@ try {
 
    $stmt = $pdo->prepare("
         INSERT INTO `owners`
-        (`name`, `creation_type_id`, `insert_time`)
+        (`name`, `notes`, `creation_type_id`, `insert_time`)
         VALUES
-        (:temp_default_owner, :creation_type_id_installation, :timestamp)");
+        (:temp_default_owner, :temp_default_notes, :creation_type_id_installation, :timestamp)");
     $stmt->bindValue('temp_default_owner', $temp_default_owner, PDO::PARAM_STR);
+	$stmt->bindValue('temp_default_notes', $temp_default_notes, PDO::PARAM_STR);
     $stmt->bindValue('creation_type_id_installation', $creation_type_id_installation, PDO::PARAM_INT);
     $stmt->bindValue('timestamp', $timestamp, PDO::PARAM_STR);
     $stmt->execute();
@@ -310,174 +316,174 @@ try {
 
     $pdo->query("
         INSERT INTO currencies
-        (`name`, currency, symbol, insert_time)
+        (`name`, currency, symbol, `notes`, insert_time)
         VALUES
-        ('Albania Lek', 'ALL', 'Lek', '" . $timestamp . "'),
-        ('Afghanistan Afghani', 'AFN', '؋', '" . $timestamp . "'),
-        ('Argentina Peso', 'ARS', '$', '" . $timestamp . "'),
-        ('Aruba Guilder', 'AWG', 'ƒ', '" . $timestamp . "'),
-        ('Australia Dollar', 'AUD', '$', '" . $timestamp . "'),
-        ('Azerbaijan New Manat', 'AZN', '" . 'ман' . "', '" . $timestamp . "'),
-        ('Bahamas Dollar', 'BSD', '$', '" . $timestamp . "'),
-        ('Barbados Dollar', 'BBD', '$', '" . $timestamp . "'),
-        ('Belarus Ruble', 'BYR', 'p.', '" . $timestamp . "'),
-        ('Belize Dollar', 'BZD', 'BZ$', '" . $timestamp . "'),
-        ('Bermuda Dollar', 'BMD', '$', '" . $timestamp . "'),
-        ('Bolivia Boliviano', 'BOB', '\$b', '" . $timestamp . "'),
-        ('Bosnia and Herzegovina Convertible Marka', 'BAM', 'KM', '" . $timestamp . "'),
-        ('Botswana Pula', 'BWP', 'P', '" . $timestamp . "'),
-        ('Bulgaria Lev', 'BGN', 'лв', '" . $timestamp . "'),
-        ('Brazil Real', 'BRL', 'R$', '" . $timestamp . "'),
-        ('Brunei Darussalam Dollar', 'BND', '$', '" . $timestamp . "'),
-        ('Cambodia Riel', 'KHR', '៛', '" . $timestamp . "'),
-        ('Canada Dollar', 'CAD', '$', '" . $timestamp . "'),
-        ('Cayman Islands Dollar', 'KYD', '$', '" . $timestamp . "'),
-        ('Chile Peso', 'CLP', '$', '" . $timestamp . "'),
-        ('China Yuan Renminbi', 'CNY', '¥', '" . $timestamp . "'),
-        ('Colombia Peso', 'COP', '$', '" . $timestamp . "'),
-        ('Costa Rica Colon', 'CRC', '₡', '" . $timestamp . "'),
-        ('Croatia Kuna', 'HRK', 'kn', '" . $timestamp . "'),
-        ('Cuba Peso', 'CUP', '₱', '" . $timestamp . "'),
-        ('Czech Republic Koruna', 'CZK', 'Kč', '" . $timestamp . "'),
-        ('Denmark Krone', 'DKK', 'kr', '" . $timestamp . "'),
-        ('Dominican Republic Peso', 'DOP', 'RD$', '" . $timestamp . "'),
-        ('East Caribbean Dollar', 'XCD', '$', '" . $timestamp . "'),
-        ('Egypt Pound', 'EGP', '£', '" . $timestamp . "'),
-        ('El Salvador Colon', 'SVC', '$', '" . $timestamp . "'),
-        ('Estonia Kroon', 'EEK', 'kr', '" . $timestamp . "'),
-        ('Euro Member Countries', 'EUR', '€', '" . $timestamp . "'),
-        ('Falkland Islands (Malvinas) Pound', 'FKP', '£', '" . $timestamp . "'),
-        ('Fiji Dollar', 'FJD', '$', '" . $timestamp . "'),
-        ('Ghana Cedis', 'GHC', '¢', '" . $timestamp . "'),
-        ('Gibraltar Pound', 'GIP', '£', '" . $timestamp . "'),
-        ('Guatemala Quetzal', 'GTQ', 'Q', '" . $timestamp . "'),
-        ('Guernsey Pound', 'GGP', '£', '" . $timestamp . "'),
-        ('Guyana Dollar', 'GYD', '$', '" . $timestamp . "'),
-        ('Honduras Lempira', 'HNL', 'L', '" . $timestamp . "'),
-        ('Hong Kong Dollar', 'HKD', '$', '" . $timestamp . "'),
-        ('Hungary Forint', 'HUF', 'Ft', '" . $timestamp . "'),
-        ('Iceland Krona', 'ISK', 'kr', '" . $timestamp . "'),
-        ('India Rupee', 'INR', 'Rs', '" . $timestamp . "'),
-        ('Indonesia Rupiah', 'IDR', 'Rp', '" . $timestamp . "'),
-        ('Iran Rial', 'IRR', '﷼', '" . $timestamp . "'),
-        ('Isle of Man Pound', 'IMP', '£', '" . $timestamp . "'),
-        ('Israel Shekel', 'ILS', '₪', '" . $timestamp . "'),
-        ('Jamaica Dollar', 'JMD', 'J$', '" . $timestamp . "'),
-        ('Japan Yen', 'JPY', '¥', '" . $timestamp . "'),
-        ('Jersey Pound', 'JEP', '£', '" . $timestamp . "'),
-        ('Kazakhstan Tenge', 'KZT', 'лв', '" . $timestamp . "'),
-        ('Korea (North) Won', 'KPW', '₩', '" . $timestamp . "'),
-        ('Korea (South) Won', 'KRW', '₩', '" . $timestamp . "'),
-        ('Kyrgyzstan Som', 'KGS', 'лв', '" . $timestamp . "'),
-        ('Laos Kip', 'LAK', '₭', '" . $timestamp . "'),
-        ('Latvia Lat', 'LVL', 'Ls', '" . $timestamp . "'),
-        ('Lebanon Pound', 'LBP', '£', '" . $timestamp . "'),
-        ('Liberia Dollar', 'LRD', '$', '" . $timestamp . "'),
-        ('Lithuania Litas', 'LTL', 'Lt', '" . $timestamp . "'),
-        ('Macedonia Denar', 'MKD', 'ден', '" . $timestamp . "'),
-        ('Malaysia Ringgit', 'RM', 'RM', '" . $timestamp . "'),
-        ('Mauritius Rupee', 'MUR', '₨', '" . $timestamp . "'),
-        ('Mexico Peso', 'MXN', '$', '" . $timestamp . "'),
-        ('Mongolia Tughrik', 'MNT', '₮', '" . $timestamp . "'),
-        ('Mozambique Metical', 'MZN', 'MT', '" . $timestamp . "'),
-        ('Namibia Dollar', 'NAD', '$', '" . $timestamp . "'),
-        ('Nepal Rupee', 'NPR', '₨', '" . $timestamp . "'),
-        ('Netherlands Antilles Guilder', 'ANG', 'ƒ', '" . $timestamp . "'),
-        ('New Zealand Dollar', 'NZD', '$', '" . $timestamp . "'),
-        ('Nicaragua Cordoba', 'NIO', 'C$', '" . $timestamp . "'),
-        ('Nigeria Naira', 'NGN', '₦', '" . $timestamp . "'),
-        ('Norway Krone', 'NOK', 'kr', '" . $timestamp . "'),
-        ('Oman Rial', 'OMR', '﷼', '" . $timestamp . "'),
-        ('Pakistan Rupee', 'PKR', '₨', '" . $timestamp . "'),
-        ('Panama Balboa', 'PAB', 'B/.', '" . $timestamp . "'),
-        ('Paraguay Guarani', 'PYG', 'Gs', '" . $timestamp . "'),
-        ('Peru Nuevo Sol', 'PEN', 'S/.', '" . $timestamp . "'),
-        ('Philippines Peso', 'PHP', '₱', '" . $timestamp . "'),
-        ('Poland Zloty', 'PLN', 'zł', '" . $timestamp . "'),
-        ('Qatar Riyal', 'QAR', '﷼', '" . $timestamp . "'),
-        ('Romania New Leu', 'RON', 'lei', '" . $timestamp . "'),
-        ('Russia Ruble', 'RUB', 'руб', '" . $timestamp . "'),
-        ('Saint Helena Pound', 'SHP', '£', '" . $timestamp . "'),
-        ('Saudi Arabia Riyal', 'SAR', '﷼', '" . $timestamp . "'),
-        ('Serbia Dinar', 'RSD', 'Дин.', '" . $timestamp . "'),
-        ('Seychelles Rupee', 'SCR', '₨', '" . $timestamp . "'),
-        ('Singapore Dollar', 'SGD', '$', '" . $timestamp . "'),
-        ('Solomon Islands Dollar', 'SBD', '$', '" . $timestamp . "'),
-        ('Somalia Shilling', 'SOS', 'S', '" . $timestamp . "'),
-        ('South Africa Rand', 'ZAR', 'R', '" . $timestamp . "'),
-        ('Sri Lanka Rupee', 'LKR', '₨', '" . $timestamp . "'),
-        ('Sweden Krona', 'SEK', 'kr', '" . $timestamp . "'),
-        ('Switzerland Franc', 'CHF', 'CHF', '" . $timestamp . "'),
-        ('Suriname Dollar', 'SRD', '$', '" . $timestamp . "'),
-        ('Syria Pound', 'SYP', '£', '" . $timestamp . "'),
-        ('Taiwan New Dollar', 'TWD', 'NT$', '" . $timestamp . "'),
-        ('Thailand Baht', 'THB', '฿', '" . $timestamp . "'),
-        ('Trinidad and Tobago Dollar', 'TTD', 'TT$', '" . $timestamp . "'),
-        ('Turkey Lira', 'TRY', '₺', '" . $timestamp . "'),
-        ('Tuvalu Dollar', 'TVD', '$', '" . $timestamp . "'),
-        ('Ukraine Hryvna', 'UAH', '₴', '" . $timestamp . "'),
-        ('United Kingdom Pound', 'GBP', '£', '" . $timestamp . "'),
-        ('United States Dollar', 'USD', '$', '" . $timestamp . "'),
-        ('Uruguay Peso', 'UYU', '\$U', '" . $timestamp . "'),
-        ('Uzbekistan Som', 'UZS', 'лв', '" . $timestamp . "'),
-        ('Venezuela Bolivar', 'VEF', 'Bs', '" . $timestamp . "'),
-        ('Viet Nam Dong', 'VND', '₫', '" . $timestamp . "'),
-        ('Yemen Rial', 'YER', '﷼', '" . $timestamp . "'),
-        ('Zimbabwe Dollar', 'ZWD', 'Z$', '" . $timestamp . "'),
-        ('Emirati Dirham', 'AED', 'د.إ', '" . $timestamp . "'),
-        ('Malaysian Ringgit', 'MYR', 'RM', '" . $timestamp . "'),
-        ('Kuwaiti Dinar', 'KWD', 'ك', '" . $timestamp . "'),
-        ('Moroccan Dirham', 'MAD', 'م.', '" . $timestamp . "'),
-        ('Iraqi Dinar', 'IQD', 'د.ع', '" . $timestamp . "'),
-        ('Bangladeshi Taka', 'BDT', 'Tk', '" . $timestamp . "'),
-        ('Bahraini Dinar', 'BHD', 'BD', '" . $timestamp . "'),
-        ('Kenyan Shilling', 'KES', 'KSh', '" . $timestamp . "'),
-        ('CFA Franc', 'XOF', 'CFA', '" . $timestamp . "'),
-        ('Jordanian Dinar', 'JOD', 'JD', '" . $timestamp . "'),
-        ('Tunisian Dinar', 'TND', 'د.ت', '" . $timestamp . "'),
-        ('Ghanaian Cedi', 'GHS', 'GH¢', '" . $timestamp . "'),
-        ('Central African CFA Franc BEAC', 'XAF', 'FCFA', '" . $timestamp . "'),
-        ('Algerian Dinar', 'DZD', 'دج', '" . $timestamp . "'),
-        ('CFP Franc', 'XPF', 'F', '" . $timestamp . "'),
-        ('Ugandan Shilling', 'UGX', 'USh', '" . $timestamp . "'),
-        ('Tanzanian Shilling', 'TZS', 'TZS', '" . $timestamp . "'),
-        ('Ethiopian Birr', 'ETB', 'Br', '" . $timestamp . "'),
-        ('Georgian Lari', 'GEL', 'GEL', '" . $timestamp . "'),
-        ('Cuban Convertible Peso', 'CUC', 'CUC$', '" . $timestamp . "'),
-        ('Burmese Kyat', 'MMK', 'K', '" . $timestamp . "'),
-        ('Libyan Dinar', 'LYD', 'LD', '" . $timestamp . "'),
-        ('Zambian Kwacha', 'ZMK', 'ZK', '" . $timestamp . "'),
-        ('Zambian Kwacha', 'ZMW', 'ZK', '" . $timestamp . "'),
-        ('Macau Pataca', 'MOP', 'MOP$', '" . $timestamp . "'),
-        ('Armenian Dram', 'AMD', 'AMD', '" . $timestamp . "'),
-        ('Angolan Kwanza', 'AOA', 'Kz', '" . $timestamp . "'),
-        ('Papua New Guinean Kina', 'PGK', 'K', '" . $timestamp . "'),
-        ('Malagasy Ariary', 'MGA', 'Ar', '" . $timestamp . "'),
-        ('Ni-Vanuatu Vatu', 'VUV', 'VT', '" . $timestamp . "'),
-        ('Sudanese Pound', 'SDG', 'SDG', '" . $timestamp . "'),
-        ('Malawian Kwacha', 'MWK', 'MK', '" . $timestamp . "'),
-        ('Rwandan Franc', 'RWF', 'FRw', '" . $timestamp . "'),
-        ('Gambian Dalasi', 'GMD', 'D', '" . $timestamp . "'),
-        ('Maldivian Rufiyaa', 'MVR', 'Rf', '" . $timestamp . "'),
-        ('Congolese Franc', 'CDF', 'FC', '" . $timestamp . "'),
-        ('Djiboutian Franc', 'DJF', 'Fdj', '" . $timestamp . "'),
-        ('Haitian Gourde', 'HTG', 'G', '" . $timestamp . "'),
-        ('Samoan Tala', 'WST', '$', '" . $timestamp . "'),
-        ('Guinean Franc', 'GNF', 'FG', '" . $timestamp . "'),
-        ('Cape Verdean Escudo', 'CVE', '$', '" . $timestamp . "'),
-        ('Tongan Pa\'anga', 'TOP', 'T$', '" . $timestamp . "'),
-        ('Moldovan Leu', 'MDL', 'MDL', '" . $timestamp . "'),
-        ('Sierra Leonean Leone', 'SLL', 'Le', '" . $timestamp . "'),
-        ('Burundian Franc', 'BIF', 'FBu', '" . $timestamp . "'),
-        ('Mauritanian Ouguiya', 'MRO', 'UM', '" . $timestamp . "'),
-        ('Bhutanese Ngultrum', 'BTN', 'Nu.', '" . $timestamp . "'),
-        ('Swazi Lilangeni', 'SZL', 'SZL', '" . $timestamp . "'),
-        ('Tajikistani Somoni', 'TJS', 'TJS', '" . $timestamp . "'),
-        ('Turkmenistani Manat', 'TMT', 'm', '" . $timestamp . "'),
-        ('Basotho Loti', 'LSL', 'LSL', '" . $timestamp . "'),
-        ('Comoran Franc', 'KMF', 'CF', '" . $timestamp . "'),
-        ('Sao Tomean Dobra', 'STD', 'STD', '" . $timestamp . "'),
-        ('Seborgan Luigino', 'SPL', 'SPL', '" . $timestamp . "')");
+        ('Albania Lek', 'ALL', 'Lek', '', '" . $timestamp . "'),
+        ('Afghanistan Afghani', 'AFN', '؋', '', '" . $timestamp . "'),
+        ('Argentina Peso', 'ARS', '$', '', '" . $timestamp . "'),
+        ('Aruba Guilder', 'AWG', 'ƒ', '', '" . $timestamp . "'),
+        ('Australia Dollar', 'AUD', '$', '',  '" . $timestamp . "'),
+        ('Azerbaijan New Manat', 'AZN', '" . 'ман' . "', '', '" . $timestamp . "'),
+        ('Bahamas Dollar', 'BSD', '$', '', '" . $timestamp . "'),
+        ('Barbados Dollar', 'BBD', '$', '', '" . $timestamp . "'),
+        ('Belarus Ruble', 'BYR', 'p.', '', '" . $timestamp . "'),
+        ('Belize Dollar', 'BZD', 'BZ$', '', '" . $timestamp . "'),
+        ('Bermuda Dollar', 'BMD', '$', '', '" . $timestamp . "'),
+        ('Bolivia Boliviano', 'BOB', '\$b', '', '" . $timestamp . "'),
+        ('Bosnia and Herzegovina Convertible Marka', 'BAM', 'KM', '', '" . $timestamp . "'),
+        ('Botswana Pula', 'BWP', 'P', '', '" . $timestamp . "'),
+        ('Bulgaria Lev', 'BGN', 'лв', '', '" . $timestamp . "'),
+        ('Brazil Real', 'BRL', 'R$', '', '" . $timestamp . "'),
+        ('Brunei Darussalam Dollar', 'BND', '', '$', '" . $timestamp . "'),
+        ('Cambodia Riel', 'KHR', '៛',  '', '" . $timestamp . "'),
+        ('Canada Dollar', 'CAD', '$', '', '" . $timestamp . "'),
+        ('Cayman Islands Dollar', 'KYD', '$', '', '" . $timestamp . "'),
+        ('Chile Peso', 'CLP', '$', '', '" . $timestamp . "'),
+        ('China Yuan Renminbi', 'CNY', '¥', '', '" . $timestamp . "'),
+        ('Colombia Peso', 'COP', '$', '', '" . $timestamp . "'),
+        ('Costa Rica Colon', 'CRC', '₡', '', '" . $timestamp . "'),
+        ('Croatia Kuna', 'HRK', 'kn', '', '" . $timestamp . "'),
+        ('Cuba Peso', 'CUP', '₱', '', '" . $timestamp . "'),
+        ('Czech Republic Koruna', 'CZK', 'Kč', '', '" . $timestamp . "'),
+        ('Denmark Krone', 'DKK', 'kr', '', '" . $timestamp . "'),
+        ('Dominican Republic Peso', 'DOP', 'RD$', '', '" . $timestamp . "'),
+        ('East Caribbean Dollar', 'XCD', '$', '', '" . $timestamp . "'),
+        ('Egypt Pound', 'EGP', '£', '', '" . $timestamp . "'),
+        ('El Salvador Colon', 'SVC', '$', '', '" . $timestamp . "'),
+        ('Estonia Kroon', 'EEK', 'kr', '', '" . $timestamp . "'),
+        ('Euro Member Countries', 'EUR', '€', '', '" . $timestamp . "'),
+        ('Falkland Islands (Malvinas) Pound', 'FKP', '£', '', '" . $timestamp . "'),
+        ('Fiji Dollar', 'FJD', '$', '', '" . $timestamp . "'),
+        ('Ghana Cedis', 'GHC', '¢', '', '" . $timestamp . "'),
+        ('Gibraltar Pound', 'GIP', '£', '', '" . $timestamp . "'),
+        ('Guatemala Quetzal', 'GTQ', 'Q', '', '" . $timestamp . "'),
+        ('Guernsey Pound', 'GGP', '£', '', '" . $timestamp . "'),
+        ('Guyana Dollar', 'GYD', '$', '', '" . $timestamp . "'),
+        ('Honduras Lempira', 'HNL', 'L', '', '" . $timestamp . "'),
+        ('Hong Kong Dollar', 'HKD', '$', '', '" . $timestamp . "'),
+        ('Hungary Forint', 'HUF', 'Ft', '', '" . $timestamp . "'),
+        ('Iceland Krona', 'ISK', 'kr', '', '" . $timestamp . "'),
+        ('India Rupee', 'INR', 'Rs', '', '" . $timestamp . "'),
+        ('Indonesia Rupiah', 'IDR', 'Rp', '', '" . $timestamp . "'),
+        ('Iran Rial', 'IRR', '﷼', '', '" . $timestamp . "'),
+        ('Isle of Man Pound', 'IMP', '£', '', '" . $timestamp . "'),
+        ('Israel Shekel', 'ILS', '₪', '', '" . $timestamp . "'),
+        ('Jamaica Dollar', 'JMD', 'J$', '', '" . $timestamp . "'),
+        ('Japan Yen', 'JPY', '¥', '', '" . $timestamp . "'),
+        ('Jersey Pound', 'JEP', '£', '', '" . $timestamp . "'),
+        ('Kazakhstan Tenge', 'KZT', 'лв', '', '" . $timestamp . "'),
+        ('Korea (North) Won', 'KPW', '₩', '', '" . $timestamp . "'),
+        ('Korea (South) Won', 'KRW', '₩', '', '" . $timestamp . "'),
+        ('Kyrgyzstan Som', 'KGS', 'лв', '', '" . $timestamp . "'),
+        ('Laos Kip', 'LAK', '₭', '', '" . $timestamp . "'),
+        ('Latvia Lat', 'LVL', 'Ls', '', '" . $timestamp . "'),
+        ('Lebanon Pound', 'LBP', '£', '', '" . $timestamp . "'),
+        ('Liberia Dollar', 'LRD', '$', '', '" . $timestamp . "'),
+        ('Lithuania Litas', 'LTL', 'Lt', '', '" . $timestamp . "'),
+        ('Macedonia Denar', 'MKD', 'ден', '', '" . $timestamp . "'),
+        ('Malaysia Ringgit', 'RM', 'RM', '', '" . $timestamp . "'),
+        ('Mauritius Rupee', 'MUR', '₨', '', '" . $timestamp . "'),
+        ('Mexico Peso', 'MXN', '$', '', '" . $timestamp . "'),
+        ('Mongolia Tughrik', 'MNT', '₮', '', '" . $timestamp . "'),
+        ('Mozambique Metical', 'MZN', 'MT', '', '" . $timestamp . "'),
+        ('Namibia Dollar', 'NAD', '$', '', '" . $timestamp . "'),
+        ('Nepal Rupee', 'NPR', '₨', '', '" . $timestamp . "'),
+        ('Netherlands Antilles Guilder', 'ANG', 'ƒ', '', '" . $timestamp . "'),
+        ('New Zealand Dollar', 'NZD', '$', '', '" . $timestamp . "'),
+        ('Nicaragua Cordoba', 'NIO', 'C$', '', '" . $timestamp . "'),
+        ('Nigeria Naira', 'NGN', '₦', '', '" . $timestamp . "'),
+        ('Norway Krone', 'NOK', 'kr', '', '" . $timestamp . "'),
+        ('Oman Rial', 'OMR', '﷼', '', '" . $timestamp . "'),
+        ('Pakistan Rupee', 'PKR', '₨', '', '" . $timestamp . "'),
+        ('Panama Balboa', 'PAB', 'B/.', '', '" . $timestamp . "'),
+        ('Paraguay Guarani', 'PYG', 'Gs', '', '" . $timestamp . "'),
+        ('Peru Nuevo Sol', 'PEN', 'S/.', '', '" . $timestamp . "'),
+        ('Philippines Peso', 'PHP', '₱', '', '" . $timestamp . "'),
+        ('Poland Zloty', 'PLN', 'zł', '', '" . $timestamp . "'),
+        ('Qatar Riyal', 'QAR', '﷼', '', '" . $timestamp . "'),
+        ('Romania New Leu', 'RON', 'lei', '', '" . $timestamp . "'),
+        ('Russia Ruble', 'RUB', 'руб', '', '" . $timestamp . "'),
+        ('Saint Helena Pound', 'SHP', '£', '', '" . $timestamp . "'),
+        ('Saudi Arabia Riyal', 'SAR', '﷼', '', '" . $timestamp . "'),
+        ('Serbia Dinar', 'RSD', 'Дин.', '', '" . $timestamp . "'),
+        ('Seychelles Rupee', 'SCR', '₨', '', '" . $timestamp . "'),
+        ('Singapore Dollar', 'SGD', '$', '', '" . $timestamp . "'),
+        ('Solomon Islands Dollar', 'SBD', '$', '', '" . $timestamp . "'),
+        ('Somalia Shilling', 'SOS', 'S', '', '" . $timestamp . "'),
+        ('South Africa Rand', 'ZAR', 'R', '', '" . $timestamp . "'),
+        ('Sri Lanka Rupee', 'LKR', '₨', '', '" . $timestamp . "'),
+        ('Sweden Krona', 'SEK', 'kr', '', '" . $timestamp . "'),
+        ('Switzerland Franc', 'CHF', 'CHF', '', '" . $timestamp . "'),
+        ('Suriname Dollar', 'SRD', '$', '', '" . $timestamp . "'),
+        ('Syria Pound', 'SYP', '£', '', '" . $timestamp . "'),
+        ('Taiwan New Dollar', 'TWD', 'NT$', '', '" . $timestamp . "'),
+        ('Thailand Baht', 'THB', '฿', '', '" . $timestamp . "'),
+        ('Trinidad and Tobago Dollar', 'TTD', 'TT$', '', '" . $timestamp . "'),
+        ('Turkey Lira', 'TRY', '₺', '', '" . $timestamp . "'),
+        ('Tuvalu Dollar', 'TVD', '$', '', '" . $timestamp . "'),
+        ('Ukraine Hryvna', 'UAH', '₴', '', '" . $timestamp . "'),
+        ('United Kingdom Pound', 'GBP', '£', '', '" . $timestamp . "'),
+        ('United States Dollar', 'USD', '$', '', '" . $timestamp . "'),
+        ('Uruguay Peso', 'UYU', '\$U', '', '" . $timestamp . "'),
+        ('Uzbekistan Som', 'UZS', 'лв', '', '" . $timestamp . "'),
+        ('Venezuela Bolivar', 'VEF', 'Bs', '', '" . $timestamp . "'),
+        ('Viet Nam Dong', 'VND', '₫', '', '" . $timestamp . "'),
+        ('Yemen Rial', 'YER', '﷼', '', '" . $timestamp . "'),
+        ('Zimbabwe Dollar', 'ZWD', 'Z$', '', '" . $timestamp . "'),
+        ('Emirati Dirham', 'AED', 'د.إ', '', '" . $timestamp . "'),
+        ('Malaysian Ringgit', 'MYR', 'RM', '', '" . $timestamp . "'),
+        ('Kuwaiti Dinar', 'KWD', 'ك', '', '" . $timestamp . "'),
+        ('Moroccan Dirham', 'MAD', 'م.', '', '" . $timestamp . "'),
+        ('Iraqi Dinar', 'IQD', 'د.ع', '', '" . $timestamp . "'),
+        ('Bangladeshi Taka', 'BDT', 'Tk', '', '" . $timestamp . "'),
+        ('Bahraini Dinar', 'BHD', 'BD', '', '" . $timestamp . "'),
+        ('Kenyan Shilling', 'KES', 'KSh', '', '" . $timestamp . "'),
+        ('CFA Franc', 'XOF', 'CFA', '', '" . $timestamp . "'),
+        ('Jordanian Dinar', 'JOD', 'JD', '', '" . $timestamp . "'),
+        ('Tunisian Dinar', 'TND', 'د.ت', '', '" . $timestamp . "'),
+        ('Ghanaian Cedi', 'GHS', 'GH¢', '', '" . $timestamp . "'),
+        ('Central African CFA Franc BEAC', 'XAF', 'FCFA', '', '" . $timestamp . "'),
+        ('Algerian Dinar', 'DZD', 'دج', '', '" . $timestamp . "'),
+        ('CFP Franc', 'XPF', 'F', '', '" . $timestamp . "'),
+        ('Ugandan Shilling', 'UGX', 'USh', '', '" . $timestamp . "'),
+        ('Tanzanian Shilling', 'TZS', 'TZS', '', '" . $timestamp . "'),
+        ('Ethiopian Birr', 'ETB', 'Br', '', '" . $timestamp . "'),
+        ('Georgian Lari', 'GEL', 'GEL', '', '" . $timestamp . "'),
+        ('Cuban Convertible Peso', 'CUC', 'CUC$', '', '" . $timestamp . "'),
+        ('Burmese Kyat', 'MMK', 'K', '', '" . $timestamp . "'),
+        ('Libyan Dinar', 'LYD', 'LD', '', '" . $timestamp . "'),
+        ('Zambian Kwacha', 'ZMK', 'ZK', '', '" . $timestamp . "'),
+        ('Zambian Kwacha', 'ZMW', 'ZK', '', '" . $timestamp . "'),
+        ('Macau Pataca', 'MOP', 'MOP$', '', '" . $timestamp . "'),
+        ('Armenian Dram', 'AMD', 'AMD', '', '" . $timestamp . "'),
+        ('Angolan Kwanza', 'AOA', 'Kz', '', '" . $timestamp . "'),
+        ('Papua New Guinean Kina', 'PGK', 'K', '', '" . $timestamp . "'),
+        ('Malagasy Ariary', 'MGA', 'Ar', '', '" . $timestamp . "'),
+        ('Ni-Vanuatu Vatu', 'VUV', 'VT', '', '" . $timestamp . "'),
+        ('Sudanese Pound', 'SDG', 'SDG', '', '" . $timestamp . "'),
+        ('Malawian Kwacha', 'MWK', 'MK', '', '" . $timestamp . "'),
+        ('Rwandan Franc', 'RWF', 'FRw', '', '" . $timestamp . "'),
+        ('Gambian Dalasi', 'GMD', 'D', '', '" . $timestamp . "'),
+        ('Maldivian Rufiyaa', 'MVR', 'Rf', '', '" . $timestamp . "'),
+        ('Congolese Franc', 'CDF', 'FC', '', '" . $timestamp . "'),
+        ('Djiboutian Franc', 'DJF', 'Fdj', '', '" . $timestamp . "'),
+        ('Haitian Gourde', 'HTG', 'G', '', '" . $timestamp . "'),
+        ('Samoan Tala', 'WST', '$', '', '" . $timestamp . "'),
+        ('Guinean Franc', 'GNF', 'FG', '', '" . $timestamp . "'),
+        ('Cape Verdean Escudo', 'CVE', '$', '', '" . $timestamp . "'),
+        ('Tongan Pa\'anga', 'TOP', 'T$', '', '" . $timestamp . "'),
+        ('Moldovan Leu', 'MDL', 'MDL', '', '" . $timestamp . "'),
+        ('Sierra Leonean Leone', 'SLL', 'Le', '', '" . $timestamp . "'),
+        ('Burundian Franc', 'BIF', 'FBu', '', '" . $timestamp . "'),
+        ('Mauritanian Ouguiya', 'MRO', 'UM', '', '" . $timestamp . "'),
+        ('Bhutanese Ngultrum', 'BTN', 'Nu.', '', '" . $timestamp . "'),
+        ('Swazi Lilangeni', 'SZL', 'SZL', '', '" . $timestamp . "'),
+        ('Tajikistani Somoni', 'TJS', 'TJS', '', '" . $timestamp . "'),
+        ('Turkmenistani Manat', 'TMT', 'm', '', '" . $timestamp . "'),
+        ('Basotho Loti', 'LSL', 'LSL', '', '" . $timestamp . "'),
+        ('Comoran Franc', 'KMF', 'CF', '', '" . $timestamp . "'),
+        ('Sao Tomean Dobra', 'STD', 'STD', '', '" . $timestamp . "'),
+        ('Seborgan Luigino', 'SPL', 'SPL', '', '" . $timestamp . "')");
 
     $pdo->query("
         CREATE TABLE IF NOT EXISTS `currency_conversions` (
@@ -738,40 +744,44 @@ try {
 
     $stmt = $pdo->prepare("
         INSERT INTO `ssl_cert_types`
-        (`id`, `type`, `creation_type_id`, `insert_time`)
+        (`id`, `type`, `notes`, `creation_type_id`, `insert_time`)
         VALUES
-        (1, :temp_default_ssl_type_one, :creation_type_id_installation, :timestamp)");
+        (1, :temp_default_ssl_type_one, :temp_default_notes, :creation_type_id_installation, :timestamp)");
     $stmt->bindValue('temp_default_ssl_type_one', $temp_default_ssl_type_one, PDO::PARAM_STR);
+	$stmt->bindValue('temp_default_notes', $temp_default_notes, PDO::PARAM_STR);
     $stmt->bindValue('creation_type_id_installation', $creation_type_id_installation, PDO::PARAM_INT);
     $stmt->bindValue('timestamp', $timestamp, PDO::PARAM_STR);
     $stmt->execute();
 
     $stmt = $pdo->prepare("
         INSERT INTO `ssl_cert_types`
-        (`id`, `type`, `creation_type_id`, `insert_time`)
+        (`id`, `type`, `notes`, `creation_type_id`, `insert_time`)
         VALUES
-        (2, :temp_default_ssl_type_two, :creation_type_id_installation, :timestamp)");
+        (2, :temp_default_ssl_type_two, :temp_default_notes, :creation_type_id_installation, :timestamp)");
     $stmt->bindValue('temp_default_ssl_type_two', $temp_default_ssl_type_two, PDO::PARAM_STR);
+	$stmt->bindValue('temp_default_notes', $temp_default_notes, PDO::PARAM_STR);
     $stmt->bindValue('creation_type_id_installation', $creation_type_id_installation, PDO::PARAM_INT);
     $stmt->bindValue('timestamp', $timestamp, PDO::PARAM_STR);
     $stmt->execute();
 
     $stmt = $pdo->prepare("
         INSERT INTO `ssl_cert_types`
-        (`id`, `type`, `creation_type_id`, `insert_time`)
+        (`id`, `type`, `notes`, `creation_type_id`, `insert_time`)
         VALUES
-        (3, :temp_default_ssl_type_three, :creation_type_id_installation, :timestamp)");
+        (3, :temp_default_ssl_type_three, :temp_default_notes, :creation_type_id_installation, :timestamp)");
     $stmt->bindValue('temp_default_ssl_type_three', $temp_default_ssl_type_three, PDO::PARAM_STR);
+	$stmt->bindValue('temp_default_notes', $temp_default_notes, PDO::PARAM_STR);
     $stmt->bindValue('creation_type_id_installation', $creation_type_id_installation, PDO::PARAM_INT);
     $stmt->bindValue('timestamp', $timestamp, PDO::PARAM_STR);
     $stmt->execute();
 
     $stmt = $pdo->prepare("
         INSERT INTO `ssl_cert_types`
-        (`id`, `type`, `creation_type_id`, `insert_time`)
+        (`id`, `type`, `notes`,`creation_type_id`, `insert_time`)
         VALUES
-        (4, :temp_default_ssl_type_four, :creation_type_id_installation, :timestamp)");
+        (4, :temp_default_ssl_type_four, :temp_default_notes, :creation_type_id_installation, :timestamp)");
     $stmt->bindValue('temp_default_ssl_type_four', $temp_default_ssl_type_four, PDO::PARAM_STR);
+	$stmt->bindValue('temp_default_notes', $temp_default_notes, PDO::PARAM_STR);
     $stmt->bindValue('creation_type_id_installation', $creation_type_id_installation, PDO::PARAM_INT);
     $stmt->bindValue('timestamp', $timestamp, PDO::PARAM_STR);
     $stmt->execute();
@@ -806,24 +816,24 @@ try {
             `name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
             `dns1` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
             `dns2` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `dns3` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `dns4` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `dns5` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `dns6` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `dns7` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `dns8` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `dns9` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `dns10` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `ip1` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `ip2` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `ip3` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `ip4` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `ip5` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `ip6` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `ip7` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `ip8` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `ip9` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `ip10` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+            `dns3` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `dns4` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `dns5` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `dns6` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `dns7` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `dns8` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `dns9` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `dns10` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `ip1` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `ip2` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `ip3` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `ip4` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `ip5` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `ip6` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `ip7` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `ip8` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `ip9` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `ip10` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
             `notes` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
             `number_of_servers` TINYINT(2) NOT NULL DEFAULT '0',
             `creation_type_id` TINYINT(2) NOT NULL DEFAULT '" . $creation_type_id_manual . "',
@@ -835,9 +845,9 @@ try {
 
     $pdo->query("
         INSERT INTO `dns`
-        (`name`, `dns1`, `dns2`, `number_of_servers`, `creation_type_id`, `insert_time`)
+        (`name`, `dns1`, `dns2`, `number_of_servers`, `notes`, `creation_type_id`, `insert_time`)
         VALUES
-        ('" . $temp_default_dns . "', 'ns1.no-dns.com', 'ns2.no-dns.com', '2', '" . $creation_type_id_installation . "', '" . $timestamp . "')");
+        ('" . $temp_default_dns . "', 'ns1.no-dns.com', 'ns2.no-dns.com', '2', '', '" . $creation_type_id_installation . "', '" . $timestamp . "')");
 
     $pdo->query("
         CREATE TABLE IF NOT EXISTS `registrars` (
@@ -955,10 +965,11 @@ try {
 
    $stmt = $pdo->prepare("
         INSERT INTO `ip_addresses`
-        (`id`, `name`, `ip`, `rdns`, `creation_type_id`, `insert_time`)
+        (`id`, `name`, `ip`, `rdns`, `notes`, `creation_type_id`, `insert_time`)
         VALUES
-        ('1', :temp_default_ip_address, '-', '-', :creation_type_id_installation, :timestamp)");
+        ('1', :temp_default_ip_address, '-', '-', :temp_default_notes, :creation_type_id_installation, :timestamp)");
     $stmt->bindValue('temp_default_ip_address', $temp_default_ip_address, PDO::PARAM_STR);
+	$stmt->bindValue('temp_default_notes', $temp_default_notes, PDO::PARAM_STR);
     $stmt->bindValue('creation_type_id_installation', $creation_type_id_installation, PDO::PARAM_INT);
     $stmt->bindValue('timestamp', $timestamp, PDO::PARAM_STR);
     $stmt->execute();
@@ -1017,7 +1028,7 @@ try {
             `interval` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Daily',
             `expression` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0 7 * * * *',
             `last_run` DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
-            `last_duration` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+            `last_duration` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
             `next_run` DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
             `sort_order` INT(4) NOT NULL DEFAULT '1',
             `is_running` TINYINT(1) NOT NULL DEFAULT '0',
@@ -1193,12 +1204,12 @@ try {
             `email_signature` INT(10) UNSIGNED NOT NULL DEFAULT '1',
             `currency_converter` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'erh',
             `use_smtp` TINYINT(1) NOT NULL DEFAULT '0',
-            `smtp_server` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+            `smtp_server` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
             `smtp_protocol` VARCHAR(3) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'tls',
             `smtp_port` VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '587',
-            `smtp_email_address` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `smtp_username` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-            `smtp_password` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+            `smtp_email_address` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `smtp_username` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+            `smtp_password` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
             `debug_mode` TINYINT(1) NOT NULL DEFAULT '0',
             `local_php_log` TINYINT(1) NOT NULL DEFAULT '0',
             `insert_time` DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
