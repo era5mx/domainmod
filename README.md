@@ -39,7 +39,7 @@ To download using Git, change to the directory where you want to install DomainM
 
     git clone https://github.com/domainmod/domainmod.git
 
-**Option #4 -- Installing via Softactulous**  
+**Option #4 -- Installing via Softactulous (available for payment plans only) **  
 
 Softaculous is the web hosting industry's leading software auto-installer, and it has helped millions of users install applications with a few clicks of a mouse. Softaculous easily integrates into the leading control panels like cPanel, Plesk, DirectAdmin, InterWorx, H-Sphere, and more. Check your hosting control panel or contact your web host if you're not sure if they offer Softaculous.
 
